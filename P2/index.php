@@ -16,12 +16,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Reservas de Hoteles</a>
-        </div>
-    </nav>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Reservas de Hoteles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="auth/sign-up.php">Sign Up</a>
+          </li>
+          <!-- Agregar más elementos de navegación si es necesario -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
     <div class="container-fluid bg-primary">
         <div class="row ">
           <!-- Columna izquierda: fondo e información de la empresa -->

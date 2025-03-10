@@ -28,8 +28,19 @@ body {
 
   .container-fluid {
     padding-top: 30px;
+    background-color: rgb(127, 255, 244);
   }
 
   .buscador{
     padding-inline: 100px;
+  }
+
+  .nav-link{
+      color: white;
+      border-radius: 10px;
+  }
+
+  .nav-link:hover{
+    color: #000;
+    background-color: rgb(127, 255, 244);
   }
