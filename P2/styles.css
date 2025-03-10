@@ -1,0 +1,35 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index: 100;
+}
+
+.main-container{
+    padding-top: 50px;
+    z-index: 1;
+}
+
+/* Clase para el fondo de la columna izquierda */
+.bg-hotel {
+    background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 50vh;
+  }
+  /* Overlay para mejorar la legibilidad del texto */
+  .info-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    height: 100%;
+  }
+
+  .container-fluid {
+    padding-top: 30px;
+  }
+
+  .buscador{
+    padding-inline: 100px;
+  }
