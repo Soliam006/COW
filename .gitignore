@@ -1,0 +1,44 @@
+# Directorios y archivos de configuración de IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Archivos del sistema y temporales
+.DS_Store
+Thumbs.db
+
+# Archivos de caché y logs
+*.log
+*.cache
+*.pid
+*.seed
+*.swp
+
+# Dependencias de Composer
+/vendor/
+composer.lock
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Configuración específica de PHPStorm
+.phpstorm.meta.php
+
+# Archivos de sesiones y caché de PHP
+sessions/
+cache/
+
+# Archivos subidos por usuarios
+uploads/
+
+# Bases de datos SQLite locales
+*.sqlite
+*.sqlite3
+
+# Archivos de cobertura de pruebas
+coverage/
+phpunit.xml
+phpunit.xml.dist

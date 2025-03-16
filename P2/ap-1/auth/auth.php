@@ -46,7 +46,7 @@ function signIn($username, $password) {
 
         if ($result) {
             echo "Usuario autenticado correctamente";
-            return 
+            return ;
         } else {
             echo "Usuario o contraseña incorrectos";
         }

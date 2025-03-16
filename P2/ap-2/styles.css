@@ -44,3 +44,9 @@ body {
     color: #000;
     background-color: rgb(127, 255, 244);
   }
+
+@media (max-width: 992px) {
+    body {
+        padding-top: 80px; /* Ajusta si la navbar cambia de tamaño */
+    }
+}
