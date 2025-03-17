@@ -147,5 +147,28 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Código JavaScript para el diálogo
+        function showDialog() {
+          const dialog = document.getElementById('dialog');
+          dialog.showModal();
+        }
+
+        function closeDialog() {
+          const dialog = document.getElementById('dialog');
+          dialog.close();
+        }
+
+        document.getElementById('open').addEventListener('click', showDialog);
+        document.getElementById('close').addEventListener('click', closeDialog);
+    </script>
+    <button id="open">Abrir diálogo</button>
+    <div class="container vh-100">
+    <dialog id="dialog" class="w-500">
+      <h2>Diálogo de ejemplo</h2>
+      <p>Este es un diálogo de ejemplo.</p>
+      <button id="close">Cerrar</button>
+    </dialog>
+    </div>
 </body>
 </html>
