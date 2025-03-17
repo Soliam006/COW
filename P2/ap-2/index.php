@@ -1,7 +1,6 @@
 <?php
+    require 'db.php';
     require_once 'start-backend.php';
-    require_once 'db.php';
-
     resetDatabase();
 ?>
 <!DOCTYPE html>
@@ -22,7 +21,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="w-100 h-100 bg-dark">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
@@ -33,9 +32,9 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../ap-1/auth/sign-up.php">Sign Up</a>
+            <a class="nav-link px-2" href="auth/sign-up.php" title="Sign Up"
+            >Sign Up</a>
           </li>
-          <!-- Agregar más elementos de navegación si es necesario -->
         </ul>
       </div>
     </div>
@@ -75,7 +74,7 @@
                     <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
                   </form>
                   <div class="mt-3">
-                    <span>¿No tienes cuenta? <a href="#">Regístrate aquí</a></span>
+                    <span>¿No tienes cuenta? <a href="auth/sign-up.php">Regístrate aquí</a></span>
                   </div>
                 </div>
               </div>
@@ -112,6 +111,7 @@
 
               <?php
                 try {
+                    require 'db.php';
                     // Variable de Conexión a Base de Datos
                     global $conn;
 
@@ -120,11 +120,11 @@
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                         echo '<div class="col-12 col-md-6 col-lg-4 mb-4">';
                         echo '  <div class="card">';
-                        echo '    <img src="' . $row['img'] . '" class="card-img-top" alt="' . $row['nombre'] . '">';
+                        echo '    <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['nombre']) . '">';
                         echo '    <div class="card-body">';
-                        echo '      <h5 class="card-title">' . $row['nombre'] . '</h5>';
-                        echo '      <p><strong>Ubicación:</strong> ' . $row['ciudad'] . ', ' . $row['pais'] . '</p>';
-                        echo '      <p><strong>Zona:</strong> ' . $row['zona'] . '</p>';
+                        echo '      <h5 class="card-title">' . htmlspecialchars($row['nombre']) . '</h5>';
+                        echo '      <p><strong>Ubicación:</strong> ' . htmlspecialchars($row['ciudad']) . ', ' . htmlspecialchars($row['pais']) . '</p>';
+                        echo '      <p><strong>Zona:</strong> ' . htmlspecialchars($row['zona']) . '</p>';
                         echo '      <p><strong>Piscina:</strong> ' . ($row['piscina'] ? '✅ Sí' : '❌ No') . '</p>';
                         echo '    </div>';
                         echo '  </div>';

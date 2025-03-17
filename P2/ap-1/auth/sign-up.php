@@ -5,13 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100 bg-dark">
-<div class="container">
+<body class="w-100 h-100 bg-dark">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Reservas de Hoteles</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="../index.html">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container d-flex justify-content-center align-items-center vh-100 bg-dark">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <!-- Controla el tamaño en diferentes dispositivos -->
             <div class="card shadow p-4">
                 <h2 class="text-center mb-4">Registro de Usuario</h2>
                 <form action="../server.php" method="POST">
@@ -41,9 +58,10 @@
                     <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                 </form>
             </div>
-        </div>
     </div>
 </div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
