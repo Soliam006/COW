@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="js/prototype.js"></script>
     <script type="text/javascript" src="js/scriptaculous.js"></script>
+    <script type="text/javascript" src="js/effects.js"></script>
 </head>
 
 <body class="w-100 h-100 bg-dark">
@@ -28,7 +29,8 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">Reservas de Hoteles</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -121,7 +123,7 @@
 
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                         echo '<div class="col-12 col-md-6 col-lg-4 mb-4">';
-                        echo '  <div class="card">';
+                        echo '  <div class="card hoteles-card">';
                         echo '    <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['nombre']) . '">';
                         echo '    <div class="card-body">';
                         echo '      <h5 class="card-title">' . htmlspecialchars($row['nombre']) . '</h5>';
@@ -149,17 +151,33 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script type="text/javascript">
-    // Esperamos a que el contenido DOM esté completamente cargado
-    document.addEventListener('DOMContentLoaded', function() {
-      // Seleccionamos todos los elementos con clase "card"
-      $$('.card').each(function(cardElement) {
-        // Aparecer gradualmente cada card (duración = 1 segundo, por ejemplo)
-        new Effect.Appear(cardElement, { duration: 1.0 });
+    <script type="text/javascript">
+  // Esperamos a que el DOM esté listo
+  document.observe('dom:loaded', function() {
+    // Seleccionamos todos los elementos con la clase "card"
+    $$('.hoteles-card').each(function(cardElement) {
+      // Primero, los ocultamos con Prototype
+      cardElement.hide(); 
+      
+      // Luego, aplicamos el efecto de "fade in" con Scriptaculous
+      new Effect.Appear(cardElement, {
+        duration: 2.0 // Duración de 1 segundo
+        // Puedes añadir más opciones, por ejemplo, delay: 0.3
       });
     });
-  </script>
 
+    $$('.bg-hotel').each(function(headerElement) {
+      // Primero, los ocultamos con Prototype
+      headerElement.hide(); 
+      
+      // Luego, aplicamos el efecto de "fade in" con Scriptaculous
+      new Effect.Appear(headerElement, {
+        duration: 2.0 // Duración de 1 segundo
+        // Puedes añadir más opciones, por ejemplo, delay: 0.3
+      });
+    });
+  });
+</script>
 </body>
+
 </html>
