@@ -1,5 +1,5 @@
 <?php // Se utiliza para conectar a la base de datos
-$servername = "localhost";
+$servername = "localhost:3666";
 $username = "root";
 $password = "";
 $dbname = "hoteles";

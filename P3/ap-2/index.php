@@ -1,7 +1,18 @@
 <?php
     require 'db.php';
     require_once 'start-backend.php';
-    resetDatabase();
+    resetDatabase();  
+    
+    session_start(); // Iniciar la sesión
+    // Verificar si el usuario ha iniciado sesión
+    $isLoggedIn = isset($_SESSION['user']); // Suponiendo que 'user' contiene la información del usuario autenticado
+    $errr = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+    if ($errr) {
+        echo '<script>alert("' . htmlspecialchars($errr) . '");</script>';
+        unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo
+    }
+
+    echo '<script>console.log("Usuario autenticado: ' . ($isLoggedIn ? 'Sí' : 'No') . '");</script>';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,6 +30,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Prototype y Scriptaculous -->
     <script type="text/javascript" src="js/prototype.js"></script>
     <script type="text/javascript" src="js/scriptaculous.js"></script>
     <script type="text/javascript" src="js/effects.js"></script>
@@ -36,148 +49,151 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link px-2" href="auth/sign-up.php" title="Sign Up"
-            >Sign Up</a>
+            <a class="nav-link px-2" href="auth/sign-up.php" title="Sign Up">Sign Up</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-    <div class="container-fluid bg-primary">
-        <div class="row ">
-          <!-- Columna izquierda: fondo e información de la empresa -->
-          <div class="col-md-6 d-none d-md-block bg-hotel">
-            <div class="info-overlay d-flex align-items-center justify-content-center">
-              <div class="text-center p-4">
-                <h1>SottoReservas</h1>
-                <p>
-                  Bienvenido a SottoReservas, la plataforma líder en reservas de hoteles.<br>
-                  Descubre las mejores ofertas y experiencias de lujo en cada estadía.
-                </p>
-              </div>
-            </div>
+  <!-- Header con información y login -->
+  <div class="container-fluid bg-primary">
+    <div class="row">
+      <!-- Columna izquierda: fondo e información de la empresa -->
+      <div class="col-md-6 d-none d-md-block bg-hotel">
+        <div class="info-overlay d-flex align-items-center justify-content-center">
+          <div class="text-center p-4">
+            <h1>SottoReservas</h1>
+            <p>
+              Bienvenido a SottoReservas, la plataforma líder en reservas de hoteles.<br>
+              Descubre las mejores ofertas y experiencias de lujo en cada estadía.
+            </p>
           </div>
-          <!-- Columna derecha: formulario de Login -->
-          <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <div class="w-75">
-              <div class="card">
-                <div class="card-header">
-                  <h2>Sign In</h2>
-                </div>
-                <div class="card-body">
-                  <form action="#" method="POST">
-                    <div class="form-group">
-                      <label for="username">Usuario</label>
-                      <input type="text" id="username" name="username" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="password">Contraseña</label>
-                      <input type="password" id="password" name="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
-                  </form>
-                  <div class="mt-3">
-                    <span>¿No tienes cuenta? <a href="auth/sign-up.php">Regístrate aquí</a></span>
+        </div>
+      </div>
+      <!-- Columna derecha: formulario de Login -->
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="w-75">
+          <div class="card">
+            <div class="card-header">
+              <h2>Sign In</h2>
+            </div>
+
+            <div class="card-body">
+              <?php if ($isLoggedIn): ?>
+                <!-- Mostrar información del usuario -->
+                <h3>Bienvenido, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h3>
+                <p>Correo: <?php echo htmlspecialchars($_SESSION['user']['email']); ?></p>
+                <a href="auth/logout.php" class="btn btn-danger mt-3">Cerrar Sesión</a>
+              <?php else: ?>
+                <!-- Mostrar formulario de inicio de sesión -->
+                <form action="auth/login.php" method="POST">
+                  <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
                   </div>
+                  <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+                </form>
+                <div class="mt-3">
+                  <span>¿No tienes cuenta? <a href="auth/sign-up.php">Regístrate aquí</a></span>
                 </div>
-              </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
       </div>
-
-    <div class="container mt-4 main-container">
-        
-        <!-- Buscador -->
-        <div class="card p-4 mb-4">
-            <h2 class="text-center">Buscar en la Web</h2>
-            <form class="row g-2" action="https://www.google.com/search" method="GET">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="q" placeholder="Buscar en Google...">
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100">Google</button>
-                </div>
-            </form>
-            <form class="row g-2 mt-2" action="https://es.wikipedia.org/wiki/Especial:Buscar" method="GET">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="search" placeholder="Buscar en Wikipedia...">
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-secondary w-100">Wikipedia</button>
-                </div>
-            </form>
-        </div>
-          <div class="container mt-4">
-            <h2 class="text-center mb-4">Lista de Hoteles Disponibles</h2>
-            <div class="row">
-
-              <?php
-                try {
-                    require 'db.php';
-                    // Variable de Conexión a Base de Datos
-                    global $conn;
-
-                    $result = $conn->query("SELECT * FROM hoteles");
-
-                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<div class="col-12 col-md-6 col-lg-4 mb-4">';
-                        echo '  <div class="card hoteles-card">';
-                        echo '    <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['nombre']) . '">';
-                        echo '    <div class="card-body">';
-                        echo '      <h5 class="card-title">' . htmlspecialchars($row['nombre']) . '</h5>';
-                        echo '      <p><strong>Ubicación:</strong> ' . htmlspecialchars($row['ciudad']) . ', ' . htmlspecialchars($row['pais']) . '</p>';
-                        echo '      <p><strong>Zona:</strong> ' . htmlspecialchars($row['zona']) . '</p>';
-                        echo '      <p><strong>Piscina:</strong> ' . ($row['piscina'] ? '✅ Sí' : '❌ No') . '</p>';
-                        echo '    </div>';
-                        echo '  </div>';
-                        echo '</div>';
-                    }
-                } catch (PDOException $e) {
-                    echo '<p class="text-danger text-center">Error en la conexión: ' . $e->getMessage() . '</p>';
-                }
-
-                $conn = null;
-              ?>
-
-            </div> <!-- Fin de fila de hoteles -->
-          </div> <!-- Fin del contenedor -->
     </div>
-    <!-- Footer -->
-    <footer class="text-center py-3 bg-primary text-white mt-4 w-100">
-        <p>&copy; 2025 Reservas de Hoteles</p>
-    </footer>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript">
-  // Esperamos a que el DOM esté listo
-  document.observe('dom:loaded', function() {
-    // Seleccionamos todos los elementos con la clase "card"
-    $$('.hoteles-card').each(function(cardElement) {
-      // Primero, los ocultamos con Prototype
-      cardElement.hide(); 
+  <!-- Contenido Principal -->
+  <div class="container mt-4 main-container">
+    <!-- Buscador de sitios web -->
+    <div class="card p-4 mb-4">
+      <h2 class="text-center">Buscar en la Web</h2>
+      <form class="row g-2" action="https://www.google.com/search" method="GET">
+        <div class="col-md-8">
+          <input type="text" class="form-control" name="q" placeholder="Buscar en Google...">
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary w-100">Google</button>
+        </div>
+      </form>
+      <form class="row g-2 mt-2" action="https://es.wikipedia.org/wiki/Especial:Buscar" method="GET">
+        <div class="col-md-8">
+          <input type="text" class="form-control" name="search" placeholder="Buscar en Wikipedia...">
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-secondary w-100">Wikipedia</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Buscador de Hoteles -->
+    <div class="card p-4 mb-4">
+      <h2 class="text-center">Buscar Hoteles</h2>
+      <div class="row g-2">
+        <div class="col-md-8 offset-md-2">
+          <input type="text" id="hotelSearch" class="form-control" placeholder="Buscar por nombre, ciudad o zona...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Listado de Hoteles -->
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">Lista de Hoteles Disponibles</h2>
+      <div id="hotelesContainer" class="row">
+        <!-- Las tarjetas de hoteles se cargarán vía Ajax -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center py-3 bg-primary text-white mt-4 w-100">
+    <p>&copy; 2025 Reservas de Hoteles</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script type="text/javascript">
+    document.observe('dom:loaded', function() {
+      // Efectos de aparición para elementos ya existentes
+      $$('.hoteles-card').each(function(cardElement) {
+        cardElement.hide();
+        new Effect.Appear(cardElement, { duration: 2.0 });
+      });
+      $$('.bg-hotel').each(function(headerElement) {
+        headerElement.hide();
+        new Effect.Appear(headerElement, { duration: 2.0 });
+      });
       
-      // Luego, aplicamos el efecto de "fade in" con Scriptaculous
-      new Effect.Appear(cardElement, {
-        duration: 2.0 // Duración de 1 segundo
-        // Puedes añadir más opciones, por ejemplo, delay: 0.3
+      // Función para cargar hoteles vía Ajax
+      function cargarHoteles(query) {
+        new Ajax.Request('filtrar_hoteles.php', {
+          method: 'get',
+          parameters: { q: query },
+          onSuccess: function(response) {
+            $('hotelesContainer').update(response.responseText);
+          },
+          onFailure: function() {
+            $('hotelesContainer').update('<div class="alert alert-danger">Error al cargar los hoteles.</div>');
+          }
+        });
+      }
+      
+      // Cargar todos los hoteles inicialmente (sin filtro)
+      cargarHoteles('');
+      
+      // Actualizar listado de hoteles mientras se teclea en el buscador
+      $('hotelSearch').observe('keyup', function(event) {
+        var query = event.element().value;
+        cargarHoteles(query);
       });
     });
-
-    $$('.bg-hotel').each(function(headerElement) {
-      // Primero, los ocultamos con Prototype
-      headerElement.hide(); 
-      
-      // Luego, aplicamos el efecto de "fade in" con Scriptaculous
-      new Effect.Appear(headerElement, {
-        duration: 2.0 // Duración de 1 segundo
-        // Puedes añadir más opciones, por ejemplo, delay: 0.3
-      });
-    });
-  });
-</script>
+  </script>
 </body>
-
 </html>

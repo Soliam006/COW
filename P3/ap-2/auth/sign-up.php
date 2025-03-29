@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Mensaje de estado del registro -->
             <?php echo $message; ?>
 
-            <form action="../auth/sign-up.php" method="POST">
+            <form id="registrationForm" action="../auth/sign-up.php" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Usuario:</label>
                     <input type="text" class="form-control" id="username" name="username" required
@@ -97,5 +97,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.observe('dom:loaded', function() {
+  $('registrationForm').observe('submit', function(event) {
+    event.stop(); // Prevenir el envío tradicional
+    new Ajax.Request('create_user.php', {
+      method: 'post',
+      parameters: Form.serialize('registrationForm'),
+      onSuccess: function(response) {
+        // Actualiza el contenedor de mensajes con la respuesta del servidor
+        $('message').update(response.responseText);
+      },
+      onFailure: function() {
+        $('message').update('Error en el registro.');
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
