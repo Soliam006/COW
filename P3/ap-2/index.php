@@ -11,8 +11,6 @@
         echo '<script>alert("' . htmlspecialchars($errr) . '");</script>';
         unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo
     }
-
-    echo '<script>console.log("Usuario autenticado: ' . ($isLoggedIn ? 'Sí' : 'No') . '");</script>';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -76,7 +74,11 @@
         <div class="w-75">
           <div class="card">
             <div class="card-header">
-              <h2>Sign In</h2>
+              <?php if ($isLoggedIn): ?>
+                <h2 class="text-center">Sotto Hoteles Home</h2>
+              <?php else: ?>
+                <h2 class="text-center">Iniciar Sesión</h2>
+              <?php endif; ?>
             </div>
 
             <div class="card-body">

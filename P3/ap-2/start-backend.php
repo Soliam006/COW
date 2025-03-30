@@ -53,7 +53,6 @@ function resetDatabase() {
         $checkColumn = $conn->query("SHOW COLUMNS FROM `users` LIKE 'descripcion'");
         if ($checkColumn->rowCount() == 0) {
             $conn->exec("ALTER TABLE `users` ADD `descripcion` VARCHAR(255) DEFAULT NULL;");
-            echo "✅ Campo `descripcion` agregado a la tabla `users`.<br>";
         } else {
             echo "⚠️ El campo `descripcion` ya existe en `users`.<br>";
         }
@@ -62,7 +61,6 @@ function resetDatabase() {
         $checkColumn = $conn->query("SHOW COLUMNS FROM `users` LIKE 'phone'");
         if ($checkColumn->rowCount() == 0) {
             $conn->exec("ALTER TABLE `users` ADD `phone` VARCHAR(15) DEFAULT NULL;");
-            echo "✅ Campo `phone` agregado a la tabla `users`.<br>";
         } else {
             echo "⚠️ El campo `phone` ya existe en `users`.<br>";
         }

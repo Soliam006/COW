@@ -12,7 +12,7 @@ function userInformationPost() {
             }
             if (isset($_POST['password'])) {
                 $password = $_POST['password'];
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $hashed_password = crypt($password, PASSWORD_DEFAULT);
             }
             if (isset($_POST['email'])) {
                 $email = trim($_POST['email']);

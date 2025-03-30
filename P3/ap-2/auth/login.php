@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare('SELECT * FROM users WHERE name = ?');
     $stmt->execute([$name]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<script>console.log("User: ' . json_encode($user) . ' ");</script>'; // Para depuración
 
     if ($user && password_verify($password, $user['password'])) {
         // Credenciales válidas, guardar información del usuario en la sesión
@@ -34,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // Credenciales inválidas
-        $_SESSION['error'] = 'Usuario o contraseña incorrectos.';
+        $_SESSION['error'] = 'Usuario o contraseña incorrectos. '. $user['password'] . $user['name'];
+        echo '<script>console.log("Error: ' . $_SESSION['error'] . ' ");</script>'; // Para depuración
         header('Location: ../index.php');
         exit;
     }
